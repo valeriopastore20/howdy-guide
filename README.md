@@ -215,12 +215,6 @@ Gnome should say that the keyring did not unlock. Insert your login password whe
 
 ## 13. Automatic GNOME Keyring unlock with TPM2
 
-### Install dependencies
-
-```bash
-sudo dnf install doas
-```
-
 ### Clone helper
 
 ```bash
@@ -228,28 +222,28 @@ cd ~/.local
 git clone https://codeberg.org/umglurf/gnome-keyring-unlock.git
 ```
 
-### Configure doas
+### Configure sudo
 
 ```bash
-sudoedit /etc/doas.conf
+sudo visudo -f /etc/sudoers.d/gnome-keyring-tpm2
 ```
 add:
-```conf
-permit nopass USERNAME as tss cmd /usr/bin/clevis-encrypt-tpm2
-permit nopass USERNAME as tss cmd /usr/bin/clevis-decrypt-tpm2
+```conf 
+USERNAME ALL=(tss) NOPASSWD: /usr/bin/clevis-encrypt-tpm2 #replace USERNAME with yours
+USERNAME ALL=(tss) NOPASSWD: /usr/bin/clevis-decrypt-tpm2 #replace USERNAME with yours
 ```
 
 ### Encrypt keyring password
 
 ```bash
 read password #and insert your login password (or the password of the keyring if, in your case, it is different from the login one)
-doas -u tss /usr/bin/clevis-encrypt-tpm2 '{"pcr_ids":"7"}' <<<$password > ~/.config/gnome-keyring.tpm2
+sudo -u tss /usr/bin/clevis-encrypt-tpm2 '{"pcr_ids":"7"}' <<<$password > ~/.config/gnome-keyring.tpm2
 ```
 
 ### Test unlock
 
 ```bash
-doas -u tss /usr/bin/clevis-decrypt-tpm2 < ~/.config/gnome-keyring.tpm2 | ~/.local/gnome-keyring-unlock/unlock.py
+sudo -u tss /usr/bin/clevis-decrypt-tpm2 < ~/.config/gnome-keyring.tpm2 | ~/.local/gnome-keyring-unlock/unlock.py
 
 ```
 
@@ -270,7 +264,7 @@ then
     then
       gnome-keyring-daemon --start --components=secrets
     fi
-    doas -u tss /usr/bin/clevis-decrypt-tpm2 < ~/.config/gnome-keyring.tpm2 | ~/.local/gnome-keyring-unlock/unlock.py
+    sudo -u tss /usr/bin/clevis-decrypt-tpm2 < ~/.config/gnome-keyring.tpm2 | ~/.local/gnome-keyring-unlock/unlock.py
 fi
 ```
 
