@@ -279,13 +279,13 @@ Logout and login... now the keyring should be unlocked automatically
 
 
 ## 15. References
-https://github.com/boltgolt/howdy
-https://codeberg.org/umglurf/gnome-keyring-unlock.git
+- https://github.com/boltgolt/howdy
+- https://codeberg.org/umglurf/gnome-keyring-unlock.git
 
 
 ## 16. A little thanks
-Found this guide useful? Please help me with the bills
-**PayPal.me**: https://www.paypal.me/valeriopastore20
+Found this guide useful? Please help me with the bills  
+<span class="paypal"><a href="https://www.paypal.me/valeriopastore20" title="Donate to this project using Paypal"><img src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-100px.png" alt="PayPal donate button" /></a></span>
 
 Happy recognitions.
 ---
