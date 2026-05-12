@@ -135,13 +135,19 @@ auth    sufficient    /usr/local/lib64/security/pam_howdy.so
 
 ## 10. Enable Howdy for Polkit
 ```bash
-sudo nano /usr/lib/pam.d/polkit-1
+sudo nano /etc/pam.d/polkit-1
 ```
 
 Add at the beginning:
 
 ```pam
-auth    sufficient    /usr/local/lib64/security/pam_howdy.so
+#%PAM-1.0
+auth       sufficient   /usr/local/lib64/security/pam_howdy.so
+auth       include      system-auth
+account    include      system-auth
+password   include      system-auth
+session    include      system-auth
+
 ```
 
 ---
